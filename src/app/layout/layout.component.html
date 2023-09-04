@@ -1,0 +1,439 @@
+ <section>
+    <div class="row mr-0">
+        <div class="col-md-12 text-right">
+            <a href="javascript:void(0)" (click)="logout()" class="nav-link logout">Logout : {{username}}</a>
+        </div>
+    </div>
+
+    <mat-tab-group dynamicHeight>
+        <mat-tab label="Manual Biiling">
+            <mat-accordion class="example-headers-align" >
+                <mat-expansion-panel [expanded] = "true">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Airtel Manual Billing
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="row mr-0">
+                        <div class="col-md-2">
+                            <label>Circle</label>
+                            <select class="form-control" [(ngModel)]="airtelCircle" (change)="selectAirtelCircle()">
+                                <option value="">Select</option>
+                                <option>AP</option>
+                                <option>TN</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label>Bill Month</label>
+                            <ng-multiselect-dropdown [placeholder]="'Select'" [data]="monthList" [disabled]="airtelCircle == '' "
+                            [(ngModel)]="airtelManualBillingMonthList" [settings]="singleSelectdropdownSettings">
+                            </ng-multiselect-dropdown>
+                        </div>
+                        <div class="col-md-4">
+                            <label *ngIf="airtelCircle ==''" class="label-transparent">0</label>
+                            <label *ngIf="airtelCircle !=''" >Please Choose <a href="javascript:void(0)" (click)="downloadFormat('Airtel')" mat-raised-button matTooltip="Download format" matTooltipPosition="above">Airtel_Manual_{{airtelCircle}}.xlsx</a> file for upload</label>
+                            <input #myInput type="file" class="form-control" accept=".xlsx" [disabled]="airtelCircle == '' " 
+                            (change)="selectFileForUpload($event,'Airtel')"/>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="label-transparent">0</label>
+                            <button type="button" class="btn btn-default btn-sm"
+                            (click)="uploadManualBilling('Airtel')">Upload</button>
+                        </div>
+                    </div> 
+                    <div class="row mr-0" *ngIf="inProgress8">
+                        <div class="col-md-12" style="margin: 10px 0px">
+                            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                            <h5 class="text-center text-info">Please wait...</h5>
+                        </div>
+                    </div>
+
+                    <div class="row mr-0" *ngIf="notInsertSiteAirtel.length != 0">
+                        <div class="col-md-12" style="margin: 10px 0px">
+                            Not insert Site Id. Plz Re-upload Following Site id : <span *ngFor="let si of notInsertSiteAirtel">{{si}}, </span>
+                        </div>
+                    </div>
+                </mat-expansion-panel>
+           
+                <mat-expansion-panel [expanded] = "true">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            RJIO Manual Billing
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="row mr-0">
+                        <div class="col-md-2">
+                            <label>Bill Month</label>
+                            <ng-multiselect-dropdown [placeholder]="'Select'" [data]="monthList"
+                            [(ngModel)]="rjioManualBillingMonthList" [settings]="singleSelectdropdownSettings">
+                            </ng-multiselect-dropdown>
+                        </div>
+                        <div class="col-md-4">
+                            <label style="display: block" >Please Choose <a href="javascript:void(0)" (click)="downloadFormat('RJIO')" mat-raised-button matTooltip="Download format" matTooltipPosition="above">RJIO_Manual.xlsx</a> file for upload</label>
+                            <input #rjioFile type="file" class="form-control" accept=".xlsx"  [disabled]="rjioManualBillingMonthList.length == 0 " 
+                            (change)="selectFileForUpload($event,'RJIO')"/>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="label-transparent">0</label>
+                            <button type="button" class="btn btn-default btn-sm" 
+                            (click)="uploadManualBilling('RJIO')">Upload</button>
+                        </div>
+                    </div>
+                    <div class="row mr-0" *ngIf="inProgress9">
+                        <div class="col-md-12" style="margin: 10px 0px">
+                            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                            <h5 class="text-center text-info">Please wait...</h5>
+                        </div>
+                    </div>
+
+                    <div class="row mr-0" *ngIf="notInsertSiteRJIO.length != 0">
+                        <div class="col-md-12" style="margin: 10px 0px">
+                            Not insert Site Id. Plz Re-upload Following Site id : <span *ngFor="let si of notInsertSiteRJIO">{{si}}, </span>
+                        </div>
+                    </div>
+                </mat-expansion-panel>
+
+                <mat-expansion-panel [expanded] = "true">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            BSNL Manual Billing
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="row mr-0">
+                        <div class="col-md-2">
+                            <label>Bill Month</label>
+                            <ng-multiselect-dropdown [placeholder]="'Select'" [data]="monthList"
+                            [(ngModel)]="bsnlManualBillingMonthList" [settings]="singleSelectdropdownSettings">
+                            </ng-multiselect-dropdown>
+                        </div>
+                        <div class="col-md-4">
+                            <label style="display: block" >Please Choose <a href="javascript:void(0)" (click)="downloadFormat('BSNL')" mat-raised-button matTooltip="Download format" matTooltipPosition="above">BSNL_Manual.xlsx</a> file for upload</label>
+                            <input #bsnlFile type="file" class="form-control" accept=".xlsx"  [disabled]="bsnlManualBillingMonthList.length == 0 " 
+                            (change)="selectFileForUpload($event,'BSNL')"/>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="label-transparent">0</label>
+                            <button type="button" class="btn btn-default btn-sm" 
+                            (click)="uploadManualBilling('BSNL')">Upload</button>
+                        </div>
+                    </div>
+                    <div class="row mr-0" *ngIf="inProgress10">
+                        <div class="col-md-12" style="margin: 10px 0px">
+                            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                            <h5 class="text-center text-info">Please wait...</h5>
+                        </div>
+                    </div>
+
+                    <div class="row mr-0" *ngIf="notInsertSiteBSNL.length != 0">
+                        <div class="col-md-12" style="margin: 10px 0px">
+                            Not insert Site Id. Plz Re-upload Following Site id : <span *ngFor="let si of notInsertSiteBSNL">{{si}}, </span>
+                        </div>
+                    </div>
+                </mat-expansion-panel>
+                <!-- <mat-expansion-panel [expanded] = "true">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            VIL Manual Billing
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="row mr-0">
+                        <div class="col-md-2">
+                            <label>Month</label>
+                            <ng-multiselect-dropdown [placeholder]="'Select'" [data]="monthList"
+                            [(ngModel)]="vilManualBillingMonthList" [settings]="singleSelectdropdownSettings">
+                            </ng-multiselect-dropdown>
+                        </div>
+                        <div class="col-md-4">
+                            <label style="display: block" >Please Choose <a href="javascript:void(0)" (click)="downloadFormat('VIL')" mat-raised-button matTooltip="Download format" matTooltipPosition="above">VIL_Manual.xlsx</a> file for upload</label>
+                            <input #vilFile type="file" class="form-control" accept=".xlsx"  [disabled]="vilManualBillingMonthList.length == 0 " 
+                            (change)="selectFileForUpload($event,'VIL')"/>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="label-transparent">0</label>
+                            <button type="button" class="btn btn-default btn-sm" 
+                            (click)="uploadManualBilling('VIL')">Upload</button>
+                        </div>
+                    </div>
+                    <div class="row mr-0" *ngIf="inProgress11">
+                        <div class="col-md-12" style="margin: 10px 0px">
+                            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                            <h5 class="text-center text-info">Please wait...</h5>
+                        </div>
+                    </div>
+
+                    <div class="row mr-0" *ngIf="notInsertSiteVIL.length != 0">
+                        <div class="col-md-12" style="margin: 10px 0px">
+                            Not insert Site Id. Plz Re-upload Following Site id : <span *ngFor="let si of notInsertSiteVIL">{{si}}, </span>
+                        </div>
+                    </div>
+                </mat-expansion-panel> -->
+                <mat-expansion-panel [expanded] = "true">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            VIL,PB_HFCL,TCL and TTSL Manual Billing
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="row mr-0">
+                        <div class="col-md-2">
+                            <label>Operator</label>
+                            <select class="form-control" [(ngModel)]="operatorName">
+                                <option value="">Select</option>
+                                <option>VIL</option>
+                                <option>PB_HFCL</option>
+                                <option>TCL</option>
+                                <option>TTSL</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label>Bill Month</label>
+                            <ng-multiselect-dropdown [placeholder]="'Select'" [data]="monthList"
+                            [(ngModel)]="otherManualBillingMonthList" [settings]="singleSelectdropdownSettings">
+                            </ng-multiselect-dropdown>
+                        </div>
+                        <div class="col-md-4" >
+                            <label *ngIf="operatorName ==''" class="label-transparent">0</label>
+                            <label style="display: block" *ngIf="operatorName != '' ">Please Choose <a href="javascript:void(0)" (click)="downloadFormatOther()" mat-raised-button matTooltip="Download format" matTooltipPosition="above">{{operatorName}}_Manual.xlsx</a> file for upload</label>
+                            <input #otherFile type="file" class="form-control" accept=".xlsx"  [disabled]="otherManualBillingMonthList.length == 0 " 
+                            (change)="selectFileForUpload($event,'Other')"/>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="label-transparent">0</label>
+                            <button type="button" class="btn btn-default btn-sm" 
+                            (click)="uploadManualBilling('Other')">Upload</button>
+                        </div>
+                    </div>
+                    <div class="row mr-0" *ngIf="operatorName != '' ">
+                        <div class="col-md-12 text-warning" style="margin: 10px 0px">
+                            <i>! {{operatorName}}_Manual.xlsx excel format should be same as output file.</i>
+                        </div>
+                    </div>
+                    <div class="row mr-0" *ngIf="inProgressOther">
+                        <div class="col-md-12" style="margin: 10px 0px">
+                            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                            <h5 class="text-center text-info">Please wait...</h5>
+                        </div>
+                    </div>
+
+                    <div class="row mr-0" *ngIf="notInsertSiteOther.length != 0">
+                        <div class="col-md-12" style="margin: 10px 0px">
+                            Not insert Site Id. Plz Re-upload Following Site id : <span *ngFor="let si of notInsertSiteOther">{{si}}, </span>
+                        </div>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
+                    
+        </mat-tab>
+        <mat-tab label="Billing Status">
+            <div class="row mr-0">
+                <div class="col-md-2">
+                    <label>Month</label>
+                    <ng-multiselect-dropdown [placeholder]="'Select'" [data]="monthList"
+                    [(ngModel)]="selectedMonthList8" [settings]="multiSelectdropdownSettings">
+                    </ng-multiselect-dropdown>
+                </div>
+                <div class="col-md-2">
+                    <label class="label-transparent">0</label>
+                    <button type="button" class="btn btn-default btn-sm" (click)="downloadBillingStatus()">Status</button>
+                </div>
+            </div>
+            <div class="row mr-0">
+                <div class="col-md-12" style="margin: 10px 0px" *ngIf="isInProgress">
+                    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                    <h5 class="text-center text-info">Please wait...</h5>
+                </div>
+                <div class="col-md-12" style="margin: 10px 0px">
+                    <table border = 1, mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                        <ng-container matColumnDef="{{dc}}" *ngFor="let dc of displayedColumns">
+                            <th mat-header-cell *matHeaderCellDef> {{dc}} </th>
+                            <td mat-cell *matCellDef="let element"> {{element[dc]}} </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="P&L Sitewise">
+            <mat-progress-bar *ngIf="inProgress1" mode="indeterminate"></mat-progress-bar>
+            <div class="row mr-0">
+                <div class="col-md-2">
+                    <label>Month</label>
+                    <ng-multiselect-dropdown [placeholder]="'Select'" [data]="monthList"
+                    [(ngModel)]="selectedMonthList1" [settings]="singleSelectdropdownSettings">
+                    </ng-multiselect-dropdown>
+                </div>
+
+                <div class="col-md-2">
+                    <label class="label-transparent">0</label>
+                    <button type="button" class="btn btn-default btn-sm" (click)="downloadReport('P&L Sitewise','1')">P&L Sitewise</button>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="P&L Summary Opco wise">
+            <mat-progress-bar *ngIf="inProgress2" mode="indeterminate"></mat-progress-bar>
+            <div class="row mr-0">
+                <div class="col-md-2">
+                    <label>Month</label>
+                    <ng-multiselect-dropdown [placeholder]="'Select'" [data]="monthList"
+                    [(ngModel)]="selectedMonthList2" [settings]="singleSelectdropdownSettings">
+                    </ng-multiselect-dropdown>
+                </div>
+
+                <div class="col-md-2">
+                    <label class="label-transparent">0</label>
+                    <button type="button" class="btn btn-default btn-sm" (click)="downloadReport('P&L Summary Opco wise','2')">P&L Summary Opco wise</button>
+                </div>
+            </div>
+        </mat-tab>
+
+        <mat-tab label="P&L Summary Circle & Opco Wise">
+            <!-- <mat-progress-bar *ngIf="inProgress3" mode="indeterminate"></mat-progress-bar> -->
+            <div class="row mr-0">
+                <div class="col-md-2">
+                    <label>Month</label>
+                    <ng-multiselect-dropdown [placeholder]="'Select'" [data]="monthList"
+                    [(ngModel)]="selectedMonthList3" [settings]="multiSelectdropdownSettings">
+                    </ng-multiselect-dropdown>
+                </div>
+
+                <div class="col-md-2">
+                    <label>Operator</label>
+                    <ng-multiselect-dropdown [placeholder]="'Select'" [data]="operatorList"
+                    [(ngModel)]="selectedOperatorList" [settings]="multiSelectdropdownSettings">
+                    </ng-multiselect-dropdown>
+                </div>
+
+                
+            
+                <div class="col-md-2">
+                    <label class="label-transparent">0</label>
+                    <button type="button" class="btn btn-default btn-sm" (click)="downloadReport('P&L Summary Circle & Opco Wise','3')">P&L Summary Circle & Opco Wise</button>
+                </div>
+            </div>
+        </mat-tab>
+
+        <mat-tab label="P&L Summary Circle Wise Site Co">
+            <mat-progress-bar *ngIf="inProgress4" mode="indeterminate"></mat-progress-bar>
+            <div class="row mr-0">
+                <div class="col-md-2">
+                    <label>Month</label>
+                    <ng-multiselect-dropdown [placeholder]="'Select'" [data]="monthList"
+                    [(ngModel)]="selectedMonthList4" [settings]="singleSelectdropdownSettings">
+                    </ng-multiselect-dropdown>
+                </div>
+                
+                <div class="col-md-2">
+                    <label class="label-transparent">0</label>
+                    <button type="button" class="btn btn-default btn-sm" (click)="downloadReport('P&L Summary Circle Wise Site Co','4')">P&L Summary Circle & Opco Wise</button>
+                </div>
+            </div>
+        </mat-tab>
+
+        <mat-tab label="Billing Reports">
+            <!-- <mat-progress-bar *ngIf="inProgress5" mode="indeterminate"></mat-progress-bar> -->
+            <div class="row mr-0">
+                
+                <div class="col-md-2">
+                    <label>Bill Month</label>
+                    <ng-multiselect-dropdown [placeholder]="'Select'" [data]="monthList"
+                    [(ngModel)]="selectedMonthList5" [settings]="singleSelectdropdownSettings"
+                    (onSelect)="onSelectOrDeselect5($event)" (onDeSelect)="onSelectOrDeselect5($event)">
+                    </ng-multiselect-dropdown>
+                </div>
+
+                <div class="col-md-2" *ngIf="isShowOperator">
+                    <label>Operator</label>
+                    <ng-multiselect-dropdown [placeholder]="'Select'" [data]="operatorList"
+                    [(ngModel)]="selectedOperatorList" [settings]="multiSelectdropdownSettings">
+                    </ng-multiselect-dropdown>
+                </div>
+                <div class="col-md-2" *ngIf="isShowCircle">
+                    <label>Circle</label>
+                    <ng-multiselect-dropdown [placeholder]="'Select'" [data]="circleList"
+                    [(ngModel)]="selectedCircleList" [settings]="multiSelectdropdownSettings">
+                    </ng-multiselect-dropdown>
+                </div>
+                
+                <div class="col-md-2">
+                    <label class="label-transparent">0</label>
+                    <button type="button" class="btn btn-default btn-sm" (click)="downloadReport('Billing Reports','5')">Billing Reports</button>
+                </div>
+            </div>
+        </mat-tab>
+        
+        <mat-tab label="Missing Bill Period">
+            <!-- <mat-progress-bar *ngIf="inProgress6" mode="indeterminate"></mat-progress-bar> -->
+            <div class="row mr-0">
+                <div class="col-md-2">
+                    <label>Month</label>
+                    <ng-multiselect-dropdown [placeholder]="'Select'" [data]="monthList"
+                    [(ngModel)]="selectedMonthList6" [settings]="multiSelectdropdownSettings">
+                    </ng-multiselect-dropdown>
+                </div>
+                
+                <div class="col-md-2">
+                    <label>Operator</label>
+                    <ng-multiselect-dropdown [placeholder]="'Select'" [data]="operatorList"
+                    [(ngModel)]="selectedOperatorList" [settings]="multiSelectdropdownSettings">
+                    </ng-multiselect-dropdown>
+                </div>
+                <div class="col-md-2">
+                    <label>Circle</label>
+                    <ng-multiselect-dropdown [placeholder]="'Select'" [data]="circleList"
+                    [(ngModel)]="selectedCircleList" [settings]="multiSelectdropdownSettings">
+                    </ng-multiselect-dropdown>
+                </div>
+                
+                
+                <div class="col-md-2">
+                    <label class="label-transparent">0</label>
+                    <button type="button" class="btn btn-default btn-sm" (click)="downloadReport('Missing Bill Period','6')">Missing Bill Period</button>
+                </div>
+            </div>
+        </mat-tab>
+
+        <mat-tab label="Cost Exception">
+            <mat-progress-bar *ngIf="inProgress7" mode="indeterminate"></mat-progress-bar>
+            <div class="row mr-0">
+                <div class="col-md-2">
+                    <label>Start Date</label>
+                    <input type="date" class="form-control" [(ngModel)]="startDate" (change)="endDate = startDate"/>
+                </div>
+                <div class="col-md-2">
+                    <label>End Date</label> <span class="star">*</span>
+                    <input type="date" class="form-control" [(ngModel)]="endDate" min="{{startDate}}" [disabled]="startDate == '' "/>
+                </div>
+                <!-- <div class="col-md-2">
+                    <label>Month</label>
+                    <ng-multiselect-dropdown [placeholder]="'Select'" [data]="monthList"
+                    [(ngModel)]="selectedMonthList7" [settings]="singleSelectdropdownSettings">
+                    </ng-multiselect-dropdown>
+                </div> -->
+                <!-- <div class="col-md-2">
+                    <label>DG %</label>
+                    <input type="number" class="form-control" [(ngModel)] = "dgPercentage"/>
+                </div>
+                <div class="col-md-2">
+                    <label>EB %</label>
+                    <input type="number" class="form-control" [(ngModel)] = "ebPercentage"/>
+                </div> -->
+                <div class="col-md-2">
+                    <label>Energy %</label>
+                    <input type="text" OnlyNumber="true" maxlength=2 class="form-control" [(ngModel)] = "energyPercentage"/>
+                </div>
+                
+                <div class="col-md-2">
+                    <label class="label-transparent">0</label>
+                    <button type="button" class="btn btn-default btn-sm" (click)="downloadReport('Cost Exception','7')">Cost Exception</button>
+                </div>
+            </div>
+
+            <div class="row mr-0">
+                <div class="col-md-12">
+                    <span class="star">*</span> End date should be next month date of start date
+                </div>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+</section>

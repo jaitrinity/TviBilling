@@ -1,0 +1,306 @@
+<!-- <mat-spinner diameter=30 style="margin:0 auto;" [color]="spinnerColor"></mat-spinner> -->
+<!-- <mat-progress-bar *ngIf="inProgress" mode="indeterminate"></mat-progress-bar> -->
+<mat-tab-group>
+    <!-- <mat-tab label="Upload">
+        <div class="row mr-0">
+            <div class="col-md-2">
+                <label>Oprator</label>
+                <select class="form-control" [(ngModel)]="operator">
+                    <option value="">Select</option>
+                    <option>Airtel</option>
+                    <option>BSNL</option>
+                    <option>RJIO</option>
+                    <option>VIL</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label>Month</label>
+                <select class="form-control" [(ngModel)]="month">
+                    <option value="">Select</option>
+                    <option value="Jan">Jan</option>
+                    <option value="Feb">Feb</option>
+                    <option value="Mar">Mar</option>
+                    <option value="Apr">Apr</option>
+                    <option value="May">May</option>
+                    <option value="Jun">Jun</option>
+                    <option value="Jul">Jul</option>
+                    <option value="Aug">Aug</option>
+                    <option value="Sep">Sep</option>
+                    <option value="Oct">Oct</option>
+                    <option value="Nov">Nov</option>
+                    <option value="Dec">Dec</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label>Type</label>
+                <select class="form-control" [(ngModel)]="type">
+                    <option value="">Select</option>
+                    <option>Site_Master</option>
+                    <option>Output</option>
+                    <option>VIL_Site_Master</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label class="label">0</label>
+                <input class="form-control" type="file" accept=".xlsx" (change)="importFile($event)"/>
+            </div>
+        </div>
+
+        <div class="row mr-0">
+            <div class="col-md-2">
+                <label class="label">0</label>
+                <button type="button" class="btn btn-default btn-sm" (click)="upload()">Upload</button>
+            </div>
+
+            <div class="col-md-3">
+                <label class="label">0</label>
+                <button type="button" class="btn btn-default btn-sm" (click)="downloadFormat('http://www.in3.co.in/in3.co.in/TVI_CP/format/Airtel_Site_Master.xlsx')">Download Site Master Format</button>
+            </div>
+
+            <div class="col-md-3">
+                <label class="label">0</label>
+                <button type="button" class="btn btn-default btn-sm" (click)="downloadFormat('http://www.in3.co.in/in3.co.in/TVI_CP/format/Airtel_Output.xlsx')">Download Output Format</button>
+            </div>
+        </div>
+    </mat-tab> -->
+    <mat-tab label="P&L Sitewise">
+        <mat-progress-bar *ngIf="inProgress1" mode="indeterminate"></mat-progress-bar>
+        <div class="row mr-0">
+            <div class="col-md-2">
+                <label>Month</label>
+                <ng-multiselect-dropdown [placeholder]="'Select'" [data]="monthList"
+                [(ngModel)]="selectedMonthList1" [settings]="singleSelectdropdownSettings">
+                </ng-multiselect-dropdown>
+            </div>
+            <!-- <div class="col-md-2">
+                <label>Month</label>
+                <select class="form-control" [(ngModel)]="month">
+                    <option value="">Select</option>
+                    <option value="Jan2020">Jan</option>
+                    <option value="Feb2020">Feb</option>
+                    <option value="Mar2020">Mar</option>
+                    <option value="Apr2020">Apr</option>
+                    <option value="May2020">May</option>
+                    <option value="Jun2020">Jun</option>
+                    <option value="Jul2020">Jul</option>
+                    <option value="Aug2020">Aug</option>
+                    <option value="Sep2020">Sep</option>
+                    <option value="Oct2020">Oct</option>
+                    <option value="Nov2020">Nov</option>
+                    <option value="Dec2020">Dec</option>
+                </select>
+            </div> -->
+
+            <div class="col-md-2">
+                <label class="label">0</label>
+                <button type="button" class="btn btn-default btn-sm" (click)="downloadReport('P&L Sitewise','1')">P&L Sitewise</button>
+            </div>
+        </div>
+    </mat-tab>
+    <mat-tab label="P&L Summary Opco wise">
+        <mat-progress-bar *ngIf="inProgress2" mode="indeterminate"></mat-progress-bar>
+        <div class="row mr-0">
+            <div class="col-md-2">
+                <label>Month</label>
+                <ng-multiselect-dropdown [placeholder]="'Select'" [data]="monthList"
+                [(ngModel)]="selectedMonthList2" [settings]="singleSelectdropdownSettings">
+                </ng-multiselect-dropdown>
+            </div>
+            <!-- <div class="col-md-2">
+                <label>Month</label>
+                <select class="form-control" [(ngModel)]="month">
+                    <option value="">Select</option>
+                    <option value="Jan2020">Jan</option>
+                    <option value="Feb2020">Feb</option>
+                    <option value="Mar2020">Mar</option>
+                    <option value="Apr2020">Apr</option>
+                    <option value="May2020">May</option>
+                    <option value="Jun2020">Jun</option>
+                    <option value="Jul2020">Jul</option>
+                    <option value="Aug2020">Aug</option>
+                    <option value="Sep2020">Sep</option>
+                    <option value="Oct2020">Oct</option>
+                    <option value="Nov2020">Nov</option>
+                    <option value="Dec2020">Dec</option>
+                </select>
+            </div> -->
+
+            <div class="col-md-2">
+                <label class="label">0</label>
+                <button type="button" class="btn btn-default btn-sm" (click)="downloadReport('P&L Summary Opco wise','2')">P&L Summary Opco wise</button>
+            </div>
+
+        </div>
+    </mat-tab>
+
+    <mat-tab label="P&L Summary Circle & Opco Wise">
+        <!-- <mat-progress-bar *ngIf="inProgress3" mode="indeterminate"></mat-progress-bar> -->
+        <div class="row mr-0">
+            <div class="col-md-2">
+                <label>Operator</label>
+                <ng-multiselect-dropdown [placeholder]="'Select'" [data]="operatorList"
+                [(ngModel)]="selectedOperatorList" [settings]="multiSelectdropdownSettings">
+                </ng-multiselect-dropdown>
+            </div>
+
+            <div class="col-md-2">
+                <label>Month</label>
+                <ng-multiselect-dropdown [placeholder]="'Select'" [data]="monthList"
+                [(ngModel)]="selectedMonthList3" [settings]="multiSelectdropdownSettings">
+                </ng-multiselect-dropdown>
+            </div>
+            <!-- <div class="col-md-2">
+                <label>Month</label>
+                <select class="form-control" [(ngModel)]="month">
+                    <option value="">Select</option>
+                    <option value="Jan2020">Jan</option>
+                    <option value="Feb2020">Feb</option>
+                    <option value="Mar2020">Mar</option>
+                    <option value="Apr2020">Apr</option>
+                    <option value="May2020">May</option>
+                    <option value="Jun2020">Jun</option>
+                    <option value="Jul2020">Jul</option>
+                    <option value="Aug2020">Aug</option>
+                    <option value="Sep2020">Sep</option>
+                    <option value="Oct2020">Oct</option>
+                    <option value="Nov2020">Nov</option>
+                    <option value="Dec2020">Dec</option>
+                </select>
+            </div> -->
+
+            <div class="col-md-2">
+                <label class="label">0</label>
+                <button type="button" class="btn btn-default btn-sm" (click)="downloadReport('P&L Summary Circle & Opco Wise','3')">P&L Summary Circle & Opco Wise</button>
+            </div>
+        </div>
+    </mat-tab>
+
+    <mat-tab label="P&L Summary Circle Wise Site Co">
+        <mat-progress-bar *ngIf="inProgress4" mode="indeterminate"></mat-progress-bar>
+        <div class="row mr-0">
+            <div class="col-md-2">
+                <label>Month</label>
+                <ng-multiselect-dropdown [placeholder]="'Select'" [data]="monthList"
+                [(ngModel)]="selectedMonthList4" [settings]="singleSelectdropdownSettings">
+                </ng-multiselect-dropdown>
+            </div>
+            <!-- <div class="col-md-2">
+                <label>Month</label>
+                <select class="form-control" [(ngModel)]="month">
+                    <option value="">Select</option>
+                    <option value="Jan2020">Jan</option>
+                    <option value="Feb2020">Feb</option>
+                    <option value="Mar2020">Mar</option>
+                    <option value="Apr2020">Apr</option>
+                    <option value="May2020">May</option>
+                    <option value="Jun2020">Jun</option>
+                    <option value="Jul2020">Jul</option>
+                    <option value="Aug2020">Aug</option>
+                    <option value="Sep2020">Sep</option>
+                    <option value="Oct2020">Oct</option>
+                    <option value="Nov2020">Nov</option>
+                    <option value="Dec2020">Dec</option>
+                </select>
+            </div> -->
+
+            <div class="col-md-2">
+                <label class="label">0</label>
+                <button type="button" class="btn btn-default btn-sm" (click)="downloadReport('P&L Summary Circle Wise Site Co','4')">P&L Summary Circle & Opco Wise</button>
+            </div>
+        </div>
+    </mat-tab>
+
+    <mat-tab label="Billing Reports">
+        <!-- <mat-progress-bar *ngIf="inProgress5" mode="indeterminate"></mat-progress-bar> -->
+        <div class="row mr-0">
+            <div class="col-md-2">
+                <label>Operator</label>
+                <ng-multiselect-dropdown [placeholder]="'Select'" [data]="operatorList"
+                [(ngModel)]="selectedOperatorList" [settings]="multiSelectdropdownSettings">
+                </ng-multiselect-dropdown>
+            </div>
+            <div class="col-md-2">
+                <label>Circle</label>
+                <ng-multiselect-dropdown [placeholder]="'Select'" [data]="circleList"
+                [(ngModel)]="selectedCircleList" [settings]="multiSelectdropdownSettings">
+                </ng-multiselect-dropdown>
+            </div>
+            <div class="col-md-2">
+                <label>Month</label>
+                <ng-multiselect-dropdown [placeholder]="'Select'" [data]="monthList"
+                [(ngModel)]="selectedMonthList5" [settings]="multiSelectdropdownSettings">
+                </ng-multiselect-dropdown>
+            </div>
+            <!-- <div class="col-md-2">
+                <label>Month</label>
+                <select class="form-control" [(ngModel)]="month">
+                    <option value="">Select</option>
+                    <option value="Jan2020">Jan</option>
+                    <option value="Feb2020">Feb</option>
+                    <option value="Mar2020">Mar</option>
+                    <option value="Apr2020">Apr</option>
+                    <option value="May2020">May</option>
+                    <option value="Jun2020">Jun</option>
+                    <option value="Jul2020">Jul</option>
+                    <option value="Aug2020">Aug</option>
+                    <option value="Sep2020">Sep</option>
+                    <option value="Oct2020">Oct</option>
+                    <option value="Nov2020">Nov</option>
+                    <option value="Dec2020">Dec</option>
+                </select>
+            </div> -->
+
+            <div class="col-md-2">
+                <label class="label">0</label>
+                <button type="button" class="btn btn-default btn-sm" (click)="downloadReport('Billing Reports','5')">Billing Reports</button>
+            </div>
+        </div>
+    </mat-tab>
+    
+    <mat-tab label="Missing Bill Period">
+        <!-- <mat-progress-bar *ngIf="inProgress6" mode="indeterminate"></mat-progress-bar> -->
+        <div class="row mr-0">
+            <div class="col-md-2">
+                <label>Operator</label>
+                <ng-multiselect-dropdown [placeholder]="'Select'" [data]="operatorList"
+                [(ngModel)]="selectedOperatorList" [settings]="multiSelectdropdownSettings">
+                </ng-multiselect-dropdown>
+            </div>
+            <div class="col-md-2">
+                <label>Circle</label>
+                <ng-multiselect-dropdown [placeholder]="'Select'" [data]="circleList"
+                [(ngModel)]="selectedCircleList" [settings]="multiSelectdropdownSettings">
+                </ng-multiselect-dropdown>
+            </div>
+            <div class="col-md-2">
+                <label>Month</label>
+                <ng-multiselect-dropdown [placeholder]="'Select'" [data]="monthList"
+                [(ngModel)]="selectedMonthList6" [settings]="multiSelectdropdownSettings">
+                </ng-multiselect-dropdown>
+            </div>
+            <!-- <div class="col-md-2">
+                <label>Month</label>
+                <select class="form-control" [(ngModel)]="month">
+                    <option value="">Select</option>
+                    <option value="Jan2020">Jan</option>
+                    <option value="Feb2020">Feb</option>
+                    <option value="Mar2020">Mar</option>
+                    <option value="Apr2020">Apr</option>
+                    <option value="May2020">May</option>
+                    <option value="Jun2020">Jun</option>
+                    <option value="Jul2020">Jul</option>
+                    <option value="Aug2020">Aug</option>
+                    <option value="Sep2020">Sep</option>
+                    <option value="Oct2020">Oct</option>
+                    <option value="Nov2020">Nov</option>
+                    <option value="Dec2020">Dec</option>
+                </select>
+            </div> -->
+
+            <div class="col-md-2">
+                <label class="label">0</label>
+                <button type="button" class="btn btn-default btn-sm" (click)="downloadReport('Missing Bill Period','6')">Missing Bill Period</button>
+            </div>
+        </div>
+    </mat-tab>
+</mat-tab-group>

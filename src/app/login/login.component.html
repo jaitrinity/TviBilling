@@ -1,0 +1,89 @@
+<ngx-spinner
+bdOpacity = 0.9
+      bdColor = "#333"
+      size = "medium"
+      color = "#fff"
+      type = "ball-scale-multiple">
+    </ngx-spinner>
+
+<div class="login-box">
+  
+  <!-- <div class="login-box-body" style="background:#0179ba"> -->
+  <div class="login-box-body" style="background:white">
+    <div class="login-logo" >
+        <a href="javascript:void(0)"><img src="assets/img/tvi_logo.png" alt="My Ad Cubes" style="height: 65px;"></a>
+    </div>
+    <form class="form-signin" (ngSubmit) = "checkAuthenticate()" #authenticateForm="ngForm" novalidate>
+      <label class="tvi-text-blue">Username</label>
+      <input type="text" [(ngModel)] = "loginModel.username" name="username" class="form-control" placeholder="Username" required autofocus style="margin-bottom: 10px;" autocomplete="off" />
+      <label class="tvi-text-blue">Password</label>
+      <input type="password" [(ngModel)] = "loginModel.password" name="password" class="form-control"  placeholder="Password" required style="margin-bottom: 10px;" />
+      <label (click)="openForgetPasswordModel()" class="tvi-text-blue" style="float:right;cursor: pointer;text-decoration: underline;margin-bottom: 15px">
+        Forget Password ?
+      </label>
+      <!-- <button class="btn btn-lg btn-sm btn-block tvi-yellow" [disabled]="!authenticateForm.valid" type="submit" style="color: white;">Login</button> -->
+      <button class="btn btn-lg btn-sm btn-block tvi-yellow" type="submit" style="color: white;">Login</button>
+    </form>
+  </div>
+</div>
+
+<div id="forgetPasswordModal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header" style="padding: 10px !important;">
+        <h4 class="modal-title">Reset Password</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row" *ngIf="isOTP_Validate">
+          <div class="col-md-12">
+            *OTP verified. Plz enter new password and confirm it.
+          </div>
+        </div>
+        <div class="row" *ngIf="!isOTP_Validate">
+          <div class="col-md-7">
+            <label>Mobile Number</label>
+            <input type="text" [(ngModel)]="mobileNumber" OnlyNumber="true" LengthValidater="10" class="form-control" placeholder="enter mobile"/>
+          </div>
+          <div class="col-md-5">
+            <label style="color: transparent;display: block">Send OTP</label>
+            <button class="btn btn-lg btn-sm btn-block tvi-yellow" [disabled] = "mobileNumber == '' || mobileNumber.length<9 " (click)="sendOTP()">Send OTP</button>
+          </div>
+        </div>
+
+        <div class="row" *ngIf="!isOTP_Validate">
+          <div class="col-md-7">
+            <label>OTP</label>
+            <input type="text" [(ngModel)]="otpNumber" OnlyNumber="true" LengthValidater="4" class="form-control" placeholder="enter 4 digit OTP"/>
+          </div>
+          <div class="col-md-5">
+            <label style="color: transparent;display: block">Verify OTP</label>
+            <button class="btn btn-lg btn-sm btn-block tvi-yellow" [disabled] = "otpNumber == '' || otpNumber.length<4  " (click)="VerifyOTP()">Verify OTP</button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-7">
+            <label>New Password</label>
+            <input type="password" [(ngModel)]="newPassword" [disabled] = "!isOTP_Validate" class="form-control" placeholder="enter new password"/>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-7">
+            <label>Confirm Password</label>
+            <input type="password" [(ngModel)]="confirmPassword" [disabled] = "!isOTP_Validate" class="form-control" placeholder="confirm password"/>
+          </div>
+          <div class="col-md-5">
+            <label style="color: transparent;display: block">Change password</label>
+            <button class="btn btn-lg btn-sm btn-block tvi-yellow" [disabled] = "confirmPassword == '' " (click)="changePassword()">Change password</button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <!-- <button class="btn btn-sm hsil-red text-white" >Approve</button> -->
+        <!-- <button type="button" class="btn  btn-sm hsil-red text-white" data-dismiss="modal">Close</button> -->
+        <button class="btn btn-lg btn-sm btn-block tvi-yellow" (click)="closeModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

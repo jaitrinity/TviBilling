@@ -1,1 +1,38 @@
 /* You can add global styles to this file, and also import other style files */
+
+html, body { height: 94%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; 
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background: url("./assets/img/background_logo.jpg") repeat-x ;
+    background-color: #2E57A7 !important;
+    animation: BackgroundGradient 30s ease infinite;
+  }
+.mr-0{
+    margin: 0px !important;
+}
+.label-transparent{
+    display : block !important;
+    color : transparent;
+}
+/* .mat-tab-body-wrapper{
+    height: 500px !important;
+} */
+
+ng-multiselect-dropdown .multiselect-dropdown .dropdown-list{
+    position: relative !important;
+}
+.tvi-yellow{
+    background-color: #ffb600 !important;
+}
+.tvi-text-yellow{
+    color : #ffb600 !important;
+}
+.tvi-text-blue{
+    color : #2E57A7 !important;
+}
+.mat-tab-label-active{
+    background: #f3ebeb;
+}

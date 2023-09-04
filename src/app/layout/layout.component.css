@@ -1,0 +1,19 @@
+section{
+    height: 113%;
+    background-color: white;
+}
+.star{
+    color: red;
+}
+table {
+    width: 50%;
+}
+table tr th{
+    font-weight: bold;
+}
+table tr th, table tr td{
+    text-align: center;
+}
+tr.mat-row, tr.mat-footer-row {
+    height: 30px;
+}
